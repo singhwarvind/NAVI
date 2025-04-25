@@ -7,7 +7,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import pdfjsLib from 'pdfjs-dist';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import {generateContent} from './ai.service.js' // Adjust path
+import {generateContent} from './Controllers/ai.controller.js' // Adjust path
 // import jwt from 'jsonwebtoken'
 // import bodyParser from 'body-parser';
 // import fetch from 'node-fetch'
