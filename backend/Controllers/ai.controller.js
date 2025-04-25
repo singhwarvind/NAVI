@@ -1,6 +1,6 @@
 import { generateContent } from '../Services/ai.service.js'
 
-export const getReview = async (req, res) => {
+export const genrateResponse = async (req, res) => {
 
     const code = req.body.code;
 

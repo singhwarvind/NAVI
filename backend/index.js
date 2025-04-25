@@ -7,7 +7,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import pdfjsLib from 'pdfjs-dist';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import {generateContent} from './Controllers/ai.controller.js' // Adjust path
+import {genrateResponse} from './Controllers/ai.controller.js' // Adjust path
 // import jwt from 'jsonwebtoken'
 // import bodyParser from 'body-parser';
 // import fetch from 'node-fetch'
@@ -44,7 +44,7 @@ app.post('/ai/get-review', async (req, res) => {
       });
     }
 
-    const review = await generateContent(code);
+    const review = await genrateResponse(code);
     res.json(review);
 
   } catch (error) {
@@ -121,7 +121,7 @@ app.post('/upload', upload.single('syllabus'), async (req, res) => {
     `;
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(prompt);
+    const result = await model.genrateResponse(prompt);
     const response = await result.response;
     
     // Clean and parse response
@@ -247,7 +247,7 @@ app.post('/upload/summarize', upload.single('material'), async (req, res) => {
   generationConfig,
   safetySettings,
 });
-    const result = await model.generateContent(summarizePrompt);
+    const result = await model.genrateResponse(summarizePrompt);
     const response = await result.response;
     
     let cleanResponse = response.text().replace(/```json|```/g, '').trim();
