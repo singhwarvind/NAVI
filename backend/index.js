@@ -1,11 +1,14 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import pdfjsLib from 'pdfjs-dist';
 import canvas from 'canvas';
-import aiRoutes from './routes/ai.routes.js';
+import aiRoutes from './Routes/ai.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
+
 
 const app = express();
 const { createCanvas } = canvas;
@@ -22,6 +25,7 @@ app.use(cors());
 
 app.use('/ai', aiRoutes);
 app.use('/upload', uploadRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

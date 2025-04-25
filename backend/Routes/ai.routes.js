@@ -1,5 +1,5 @@
 import express from 'express';
-import { handleCodeReview } from '../controllers/ai.controller.js';
+import { handleCodeReview } from '../Controllers/ai.controller.js';
 
 
 const router = express.Router();

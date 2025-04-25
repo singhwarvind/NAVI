@@ -1,5 +1,9 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); 
 
 export async function genrateResponse(prompt, options = {}) {
   const model = genAI.getGenerativeModel({
