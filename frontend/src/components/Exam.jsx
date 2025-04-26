@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Exam.css';
-import Navbar from './Navbar';
+import Navbar from './Navbar.jsx';
 
 const StudyPlanner = () => {
   const [file, setFile] = useState(null);

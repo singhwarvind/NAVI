@@ -13,9 +13,9 @@
     top: 0;
     background-image: linear-gradient(
         135deg,
-        rgba(218, 218, 235, 0.533),
-        rgba(18, 51, 184, 0.335),
-        rgba(151, 151, 207, 0.575)
+        rgba(97, 177, 209, 0.712),
+        rgba(18, 51, 184, 0.623),
+        rgba(54, 126, 185, 0.575)
       );
       background-size: 200% 200%;
       animation: moveGradient 3s ease infinite;
@@ -23,8 +23,9 @@
     .logo{
         font-size: xx-large;
         font-weight: bold;
+        font-family: 'Times New Roman', Times, serif;
         cursor: pointer;
-        color: rgb(29, 29, 213);
+        color: rgb(250, 250, 250);
     }
     .list{
         display: flex;
@@ -49,6 +50,7 @@
 .nav li {
     list-style-type: none;
     margin: 0 1.5rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: x-large;
     font-weight: 500;
     color: rgb(241, 245, 249); /* Slightly transparent text */

@@ -54,7 +54,7 @@ int main() {
       // Handle response structure properly
       const result = {
         status: response.data?.status || 'error',
-        summary: response.data?.summary || 'No summary provided',
+        summary: response.data || 'No summary provided',
         explanation: response.data?.explanation || '',
         issues: response.data?.issues || [],
         corrected_code: response.data?.corrected_code || ''
