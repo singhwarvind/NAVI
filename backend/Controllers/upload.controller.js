@@ -1,40 +1,76 @@
-import dotenv from 'dotenv';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-dotenv.config();
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// Generate study plan
-export const generateStudyPlan = async (req, res) => {
+export const reviewCode = async (req, res) => {
   try {
-    const { examDate, syllabus } = req.body;
+    const { code } = req.body;
 
-    if (!examDate || !syllabus) {
-      return res.status(400).json({ error: "Exam date and syllabus are required." });
+    if (!code) {
+      return res.status(400).json({ error: "Code is required." });
     }
 
     const prompt = `
-      You are an AI study planner. Generate a smart and effective daily study plan
-      starting from today until the exam date: ${examDate}.
-      The syllabus is: ${syllabus}
+You are a code reviewer AI. Analyze the following C++ code:
+${code}
 
-      Break it down day-by-day with topics to cover, tips, and reasonable time durations.
-    `;
+Return the result in JSON format with the following structure:
+{
+  "status": "correct" | "needs_fix" | "error",
+  "summary": "Short summary of the code quality",
+  "explanation": "Detailed markdown explanation of the code",
+  "issues": [
+    {
+      "type": "Issue Type",
+      "description": "Issue description",
+      "severity": "low" | "medium" | "high",
+      "corrected_code": "Updated/fixed code block (if any)"
+    }
+  ],
+  "corrected_code": "Full corrected code if applicable"
+}
+`;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const plan = response.text();
+    const text = response.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    res.json({ plan }); // Return the generated study plan
+    // Try to parse JSON safely
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch (err) {
+      return res.status(500).json({
+        status: "error",
+        summary: "Parsing failed",
+        explanation: "Gemini did not return valid JSON.",
+        issues: [],
+        corrected_code: ""
+      });
+    }
+
+    // Send back the actual parsed data from AI
+    res.json({
+      status: parsed.status, 
+      summary: parsed.summary, 
+      explanation: parsed.explanation,
+      issues: parsed.issues,
+      corrected_code: parsed.corrected_code
+    });
+    
   } catch (error) {
-    console.error("Error generating study plan:", error);
-    res.status(500).json({ error: "Failed to generate study plan" });
+    console.error("❌ Review Error:", error.message || error);
+    res.status(500).json({
+      status: "error",
+      summary: "Code analysis failed",
+      explanation: error.message,
+      issues: [],
+      corrected_code: ""
+    });
   }
 };
+// In upload.controller.js
+export const generateStudyPlan = (req, res) => {
+  // Your logic for generating the study plan
+};
 
-// Placeholder for summarizing PDF (you can build this later)
-export const summarizePDF = async (req, res) => {
-  res.json({ message: "PDF summarized!" });
+export const summarizePDF = (req, res) => {
+  // Your logic for summarizing the PDF
 };

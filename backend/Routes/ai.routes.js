@@ -1,9 +1,10 @@
-import express from 'express';
-import { handleCodeReview } from '../Controllers/ai.controller.js';
-
+const express = require('express');
+const aiController = require("../controllers/ai.controller")
 
 const router = express.Router();
 
-router.post('/get-review', handleCodeReview);
 
-export default router;
+router.post("/get-review", aiController.getReview)
+
+
+module.exports = router;    

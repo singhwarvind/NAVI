@@ -179,7 +179,7 @@ const StudyPlanner = () => {
                           <span>📝 {topic.subtopics?.length || 0} subtopics</span>
                         </div>
                         {topic.subtopics?.length > 0 && (
-                          <ul className="subtopics-list">
+                          <ul className="subtopics-list" style={{display: "block"}}>
                             {topic.subtopics.map((sub, i) => (
                               <li key={i}>• {sub}</li>
                             ))}
@@ -211,7 +211,7 @@ const StudyPlanner = () => {
                       {day.activities?.length > 0 && (
                         <ul className="activities-list">
                           {day.activities.map((activity, i) => (
-                            <li key={i}>✔️ {activity}</li>
+                            <li key={i}>✔️ {activity}</li> 
                           ))}
                         </ul>
                       )}
